@@ -322,7 +322,7 @@ class WPEAC_Admin {
 		}
 		if ( function_exists( 'rest_get_server' ) ) {
 			foreach ( self::get_rest_api_namespaces() as $namespace ) {
-				$this->init_cache_control_settings( $namespace );
+				$this->init_cache_control_settings( $namespace, 0 );
 			}
 			WPEAC_Core::update( 'namespaces', self::get_rest_api_namespaces() );
 		}
@@ -364,12 +364,13 @@ class WPEAC_Admin {
 	 * @since 0.1.1
 	 * @uses register_setting
 	 * @param string $post_type The post type that we're registering settings against
+	 * @param number $default Initial cache time value, 1 hour by default
 	 * @return null
 	 */
-	function init_cache_control_settings( $post_type ) {
+	function init_cache_control_settings( $post_type, $default = 3600 ) {
 		$key = $post_type . '_cache_expires_value';
 		if ( empty( WPEAC_Core::get( $key ) ) ) {
-			$this->default_cache_control_to_hour( $post_type );
+			WPEAC_Core::update( $post_type . '_cache_expires_value', $default );
 		}
 	}
 	/**
