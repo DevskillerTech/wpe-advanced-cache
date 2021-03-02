@@ -10,6 +10,7 @@ class WPEAC_Admin {
 	 * @var array VALID_CACHE_CONTROL_OPTIONS This lists out the second time, and human readable times we can set for cache headers
 	 */
 	const VALID_CACHE_CONTROL_OPTIONS = array(
+		'Disabled'   => 0,
 		'10 Minutes' => 600,
 		'1 Hour'     => 3600,
 		'4 Hours'    => 14400,
