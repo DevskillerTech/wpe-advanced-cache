@@ -526,7 +526,17 @@ class WPEAC_Admin {
 			return;
 		}
 		$server = rest_get_server();
-		return $server->get_namespaces();
+		$namespaces = $server->get_namespaces();
+
+		// Ignore wp/ namespace because caching it may result in exposing sensitive
+		// or private information, such as user data or unpublished posts.
+		foreach ( $namespaces as $key => $namespace ) {
+			if ( substr( $namespace, 0, 3 ) === 'wp/' ) {
+				unset( $namespaces[$key] );
+			}
+		}
+
+		return $namespaces;
 	}
 	/**
 	 * Purge Varnish By Path
