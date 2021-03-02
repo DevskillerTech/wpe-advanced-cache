@@ -206,9 +206,15 @@ class WPEAC_Core {
 	 *
 	 * @since 1.2.0
 	 * @param string $route full request path of current API request
+	 * @param string $method HTTP method used for the current API request
 	 * @return string Header information
 	 */
-	public static function send_header_cache_control_api( $route ) {
+	public static function send_header_cache_control_api( $route, $method ) {
+		// Set cache headers only for GET requests
+		if ( "GET" !== $method ) {
+			return;
+		}
+
 		$namespace = WPEAC_Core::get_namespace( $route );
 		$namespace_cache_length = self::get( $namespace . '_cache_expires_value' );
 		$namespace_cache_length = apply_filters( 'wpe_ac_namespace_cache_length', $namespace_cache_length, $namespace, $route );
