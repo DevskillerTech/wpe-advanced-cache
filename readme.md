@@ -1,10 +1,10 @@
-# WP Engine Advanced Cache
+# WP Engine Advanced Cache (DevSkiller fork)
 
-Contributors: ethankennedy, stevenkword\
+Contributors: ethankennedy, stevenkword, xemlock\
 Tags: wpengine, cache, headers, last-modified\
 Requires at least: 3.5\
-Tested up to: 5.2\
-Stable tag: 1.3.3
+Tested up to: 5.6\
+Stable tag: 1.3.4
 
 This plugin is a tool that leverages some specific WP Engine tools, as well as general web options for increasing the cacheability of a WordPress site.
 
@@ -26,6 +26,15 @@ This plugin is a tool that leverages some specific WP Engine tools, as well as g
 4. Configure the cache options for your public post types, and manage other caching related global options.
 
 ## Changelog
+
+1.3.4
+
+* Cache headers are set only for GET requests
+* Added option to selectively disable cache headers
+* Added link to cache settings on plugins page
+* REST api cache headers are disabled by default
+* Permanently removed cache headers for wp/ REST namespace, as caching it may result in exposing sensitive
+  or private information, such as user data or unpublished posts. It also may interfere with Gutenberg editor.
 
 1.3.3
 
