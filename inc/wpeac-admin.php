@@ -35,6 +35,8 @@ class WPEAC_Admin {
 		add_action( 'after_switch_theme', array( $this, 'update_global_last_modified' ) );
 		// Set the new last modified global variable to prevent things from stale menus on pages that haven't been changed
 		add_action( 'edited_nav_menu', array( $this, 'update_global_last_modified' ) );
+		// Add link to cache settings on plugins page
+		add_filter( 'plugin_action_links', array( $this, 'add_settings_link' ), 10, 3 );
 	}
 	/**
 	 * Register Admin Menu
@@ -569,4 +571,19 @@ class WPEAC_Admin {
 		$url = array( $this->path_to_purge );
 		return $url;
 	}
+
+	function add_settings_link( $links, $plugin_file, $plugin_data ) {
+		static $this_plugin;
+
+		if ( ! $this_plugin ) {
+			$this_plugin = plugin_basename( realpath( dirname( __FILE__ ) . '/../wpe-advanced-cache.php' ) );
+		}
+
+		if ( $plugin_file === $this_plugin ) {
+			$settings_link = '<a href="' . get_admin_url( null, 'options-general.php?page=cache-settings' ) . '">' . esc_html(__('Settings')) . '</a>';
+			array_unshift( $links, $settings_link );
+		}
+
+		return $links;
+    }
 }
